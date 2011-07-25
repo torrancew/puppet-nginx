@@ -3,13 +3,14 @@ import '*'
 class nginx( $user = 'www-data', $conf_root = '/etc/nginx', $log_root = '/var/log/nginx', $pidfile = '/var/run/nginx.pid', $workers = 1, $connections = 1024, $keepalive = 60 ) {
 
   $conf_dirs = [ 
-    inline_template("<%= conf_root %>"),
-    inline_template("<%= conf_root %>/conf.d"),
-    inline_template("<%= conf_root %>/sites-available"),
-    inline_template("<%= conf_root %>/sites-enabled"),
+    $conf_root,
+    "${conf_root}/conf.d",
+    "${conf_root}/includes",
+    "${conf_root}/sites-available",
+    "${conf_root}/sites-enabled",
   ]
   
-  $main_conf = inline_template("<%= conf_root %>/nginx.conf")
+  $main_conf = "${conf_root}/nginx.conf"
   
   package {
     'nginx':
