@@ -20,14 +20,14 @@ class nginx( $user = 'www-data', $conf_root = '/etc/nginx', $log_root = '/var/lo
   file {
     $conf_dirs:
       ensure  => directory,
-      mode    => '755',
+      mode    => 0755,
       owner   => root,
       group   => root,
       require => Package['nginx'];
 
     $main_conf:
       ensure  => file,
-      mode    => '644',
+      mode    => 0644,
       owner   => root,
       group   => root,
       require => File[$conf_dirs],
