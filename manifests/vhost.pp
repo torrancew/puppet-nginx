@@ -1,4 +1,7 @@
 define nginx::vhost( $enabled = true, $docroot = '/var/www', $conf_root = '/etc/nginx', $log_root = '/var/log/nginx', $bind_addr = '127.0.0.1', $bind_port = '80'  ) {
+  
+  include nginx
+
   $vhost_root = "${conf_root}/sites-available"
   $vhost_conf = "${vhost_root}/${name}"
   $vhost_enabled = "${conf_root}/sites-enabled/${name}"
@@ -6,7 +9,7 @@ define nginx::vhost( $enabled = true, $docroot = '/var/www', $conf_root = '/etc/
   file {
     $vhost_conf:
       ensure  => present,
-      mode    => '644',
+      mode    => 0644,
       owner   => root,
       group   => root,
       require => File[$vhost_root],
@@ -17,7 +20,7 @@ define nginx::vhost( $enabled = true, $docroot = '/var/www', $conf_root = '/etc/
     file {
       $vhost_enabled:
         ensure  => link,
-        mode    => '644',
+        mode    => 0644,
         owner   => root,
         group   => root,
         require => File[$vhost_conf],
